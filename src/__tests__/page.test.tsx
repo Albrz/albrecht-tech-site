@@ -2,15 +2,23 @@ import { render, screen } from '@testing-library/react';
 import Home from '../app/page';
 
 describe('Home Page', () => {
-  it('renders the company name', () => {
+  it('renders the main heading', () => {
     render(<Home />);
-    const heading = screen.getByText(/Albrecht Tech/i);
+    const heading = screen.getByText(/Transforme seu Negócio com Soluções Inteligentes/i);
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders the company tagline', () => {
+  it('renders the services section', () => {
     render(<Home />);
-    const tagline = screen.getByText(/Soluções em Automação com IA/i);
-    expect(tagline).toBeInTheDocument();
+    const servicesHeading = screen.getByText(/Nossos Serviços/i);
+    expect(servicesHeading).toBeInTheDocument();
+  });
+
+  it('renders the CTA buttons', () => {
+    render(<Home />);
+    const startButton = screen.getByText(/Comece Agora/i);
+    const servicesButton = screen.getByText(/Conheça Nossos Serviços/i);
+    expect(startButton).toBeInTheDocument();
+    expect(servicesButton).toBeInTheDocument();
   });
 });
