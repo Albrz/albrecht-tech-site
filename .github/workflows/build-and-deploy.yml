@@ -45,7 +45,7 @@ jobs:
           name: build-output
           path: |
             .next/**/*
-            public
+            public/**/*
           if-no-files-found: error
 
   deploy:
@@ -82,6 +82,19 @@ jobs:
           ls -la
           echo "\nNext directory:"
           ls -la .next || true
+
+      - name: Prepare Vercel build output
+        run: |
+          mkdir -p .vercel/output/static
+          cp -r .next/static/* .vercel/output/static/
+          mkdir -p .vercel/output/_next/static
+          cp -r .next/static/* .vercel/output/_next/static/
+          cp -r public/* .vercel/output/static/
+          echo '{ "version": 3 }' > .vercel/output/config.json
+          cp -r .next/standalone/* .vercel/output/
+          cp -r .next/server .vercel/output/
+          echo "Vercel output directory:"
+          ls -la .vercel/output
 
       - name: Deploy to Vercel
         env:
