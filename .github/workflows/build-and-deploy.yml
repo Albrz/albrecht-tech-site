@@ -36,17 +36,15 @@ jobs:
           pwd
           echo "\nContents:"
           ls -la
-          echo "\nNext directory:"
-          ls -la .next
-          echo "\nNext static directory:"
-          ls -la .next/static
+          echo "\nVercel output directory:"
+          ls -la .vercel/output || true
 
       - name: Upload build output
         uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: |
-            .next/**/*
+            .vercel/output/**/*
             public/**/*
           if-no-files-found: error
 
@@ -74,7 +72,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-output
-          path: .
+          path: .vercel/output
 
       - name: List directory contents
         run: |
@@ -82,37 +80,8 @@ jobs:
           pwd
           echo "\nContents:"
           ls -la
-          echo "\nNext directory:"
-          ls -la .next || true
-          echo "\nNext static directory:"
-          ls -la .next/static || true
-
-      - name: Prepare Vercel build output
-        run: |
-          mkdir -p .vercel/output/static
-          mkdir -p .vercel/output/_next/static
-          
-          if [ -d ".next/static" ]; then
-            cp -r .next/static/* .vercel/output/static/
-            cp -r .next/static/* .vercel/output/_next/static/
-          fi
-          
-          if [ -d "public" ]; then
-            cp -r public/* .vercel/output/static/
-          fi
-          
-          echo '{ "version": 3 }' > .vercel/output/config.json
-          
-          if [ -d ".next/standalone" ]; then
-            cp -r .next/standalone/* .vercel/output/
-          fi
-          
-          if [ -d ".next/server" ]; then
-            cp -r .next/server .vercel/output/
-          fi
-          
-          echo "Vercel output directory:"
-          ls -la .vercel/output
+          echo "\nVercel output directory:"
+          ls -la .vercel/output || true
 
       - name: Deploy to Vercel
         run: |
