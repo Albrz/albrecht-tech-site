@@ -37,7 +37,9 @@ jobs:
           echo "\nContents:"
           ls -la
           echo "\nNext directory:"
-          ls -la .next || true
+          ls -la .next
+          echo "\nNext static directory:"
+          ls -la .next/static
 
       - name: Upload build output
         uses: actions/upload-artifact@v4
@@ -82,17 +84,33 @@ jobs:
           ls -la
           echo "\nNext directory:"
           ls -la .next || true
+          echo "\nNext static directory:"
+          ls -la .next/static || true
 
       - name: Prepare Vercel build output
         run: |
           mkdir -p .vercel/output/static
-          cp -r .next/static/* .vercel/output/static/
           mkdir -p .vercel/output/_next/static
-          cp -r .next/static/* .vercel/output/_next/static/
-          cp -r public/* .vercel/output/static/
+          
+          if [ -d ".next/static" ]; then
+            cp -r .next/static/* .vercel/output/static/
+            cp -r .next/static/* .vercel/output/_next/static/
+          fi
+          
+          if [ -d "public" ]; then
+            cp -r public/* .vercel/output/static/
+          fi
+          
           echo '{ "version": 3 }' > .vercel/output/config.json
-          cp -r .next/standalone/* .vercel/output/
-          cp -r .next/server .vercel/output/
+          
+          if [ -d ".next/standalone" ]; then
+            cp -r .next/standalone/* .vercel/output/
+          fi
+          
+          if [ -d ".next/server" ]; then
+            cp -r .next/server .vercel/output/
+          fi
+          
           echo "Vercel output directory:"
           ls -la .vercel/output
 
