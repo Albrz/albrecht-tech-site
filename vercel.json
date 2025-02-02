@@ -24,5 +24,13 @@
         }
       ]
     }
+  ],
+  "alias": ["albrechttech.com.br"],
+  "redirects": [
+    {
+      "source": "www.albrechttech.com.br",
+      "destination": "albrechttech.com.br",
+      "permanent": true
+    }
   ]
 }
