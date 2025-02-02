@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
-const config = {
+const nextConfig = {
   output: 'standalone',
+  distDir: '.vercel/output',
+  generateBuildId: async () => {
+    return 'build'
+  },
   images: {
     domains: ['images.unsplash.com'],
   },
   reactStrictMode: true,
 }
 
-export default config
+export default nextConfig
