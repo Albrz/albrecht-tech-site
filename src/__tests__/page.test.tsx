@@ -10,8 +10,9 @@ describe('Home Page', () => {
 
   it('renders the services section', () => {
     render(<Home />);
-    const servicesHeading = screen.getByText(/Nossos Serviços/i);
+    const servicesHeading = screen.getByTestId('services-section-title');
     expect(servicesHeading).toBeInTheDocument();
+    expect(servicesHeading).toHaveTextContent(/Nossos Serviços/i);
   });
 
   it('renders the CTA buttons', () => {
