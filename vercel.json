@@ -1,8 +1,11 @@
 {
   "version": 2,
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": null,
   "framework": "nextjs",
+  "outputDirectory": ".vercel/output",
   "regions": ["gru1"],
-  "buildCommand": false,
   "headers": [
     {
       "source": "/(.*)",
